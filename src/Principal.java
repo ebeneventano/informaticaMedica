@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class Principal extends JFrame {
     
 	private JButton jButton1;

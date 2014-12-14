@@ -93,7 +93,9 @@ public class ProcesamientoImagen {
 		
 		nombreDelArchivo = getNombreImagen("convolucion");
 		
-    	return output.getAsBufferedImage();
+		this.imageActual = output.getAsBufferedImage();
+		
+    	return imageActual;
     }
 
 	public void guardarEnBase() {

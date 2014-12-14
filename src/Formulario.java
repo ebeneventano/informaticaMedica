@@ -16,6 +16,7 @@ import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
+@SuppressWarnings("serial")
 public class Formulario extends JFrame {
 
 	private JPanel JPanel_Gris;
