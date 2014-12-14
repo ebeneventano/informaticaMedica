@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.media.jai.JAI;
@@ -26,7 +27,7 @@ public class ProcesamientoImagen {
 	
     private File archivoSeleccionado;
     private String nombreDelArchivo;
-    private BufferedImage imageActual;
+    private BufferedImage imagenActual;
     
     //Método que devuelve una imagen abierta desde archivo
     //Retorna un objeto BufferedImagen
@@ -54,7 +55,7 @@ public class ProcesamientoImagen {
                  
         }
         //Asignamos la imagen cargada a la propiedad imageActual
-        imageActual=bmp;
+        imagenActual=bmp;
         
         nombreDelArchivo = getNombreImagen(null);
         //Retornamos el valor
@@ -67,20 +68,20 @@ public class ProcesamientoImagen {
         Color colorAux;
                 
         //Recorremos la imagen píxel a píxel
-        for( int i = 0; i < imageActual.getWidth(); i++ ){
-            for( int j = 0; j < imageActual.getHeight(); j++ ){
+        for( int i = 0; i < imagenActual.getWidth(); i++ ){
+            for( int j = 0; j < imagenActual.getHeight(); j++ ){
                 //Almacenamos el color del píxel
-                colorAux=new Color(this.imageActual.getRGB(i, j));
+                colorAux=new Color(this.imagenActual.getRGB(i, j));
                 //Calculamos la media de los tres canales (rojo, verde, azul)
                 mediaPixel=(int)((colorAux.getRed()+colorAux.getGreen()+colorAux.getBlue())/3);
                 //Cambiamos a formato sRGB
                 colorSRGB=(mediaPixel << 16) | (mediaPixel << 8) | mediaPixel;
                 //Asignamos el nuevo valor al BufferedImage
-                imageActual.setRGB(i, j,colorSRGB);
+                imagenActual.setRGB(i, j,colorSRGB);
             }
         }
         //Retornamos la imagen
-        return imageActual;
+        return imagenActual;
     }
     
     public BufferedImage aplicarFiltroConvolucion(){
@@ -89,23 +90,28 @@ public class ProcesamientoImagen {
 		// Create the kernel.
 		KernelJAI kernel = new KernelJAI(3, 3, matrix);
 		// Create the convolve operation.
-		PlanarImage output = JAI.create("convolve", imageActual, kernel);
+		PlanarImage output = JAI.create("convolve", imagenActual, kernel);
 		
 		nombreDelArchivo = getNombreImagen("convolucion");
 		
-		this.imageActual = output.getAsBufferedImage();
+		this.imagenActual = output.getAsBufferedImage();
 		
-    	return imageActual;
+    	return imagenActual;
     }
 
 	public void guardarEnBase() {
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		OutputStream b64 = new Base64OutputStream(os);
+		
+		Histograma histograma = new Histograma();
+		int [][] histogramaArray = histograma.completarHistograma(imagenActual);
+		Color colorPromedio = obtenerColorPromedio(imagenActual);
+		
 		try {
-			ImageIO.write(imageActual, "png", b64);
+			ImageIO.write(imagenActual, "png", b64);
 			String base64 = os.toString("UTF-8");
 			
-			createInsertQuery(base64, nombreDelArchivo);
+			createInsertQuery(base64, nombreDelArchivo, histogramaArray, colorPromedio.getRGB());
 		
 		} catch (Exception e) {
 			System.out.println("NO SE PUDO GUARDAR EN LA BASE");
@@ -126,16 +132,18 @@ public class ProcesamientoImagen {
 		return nombreDelArchivo;
 	}
 	
-	public static void createInsertQuery(String result, String nombre) throws SQLException {
+	public static void createInsertQuery(String base64, String nombre, int [][] histogramaArray, int rgb) throws SQLException {
 
 		Connection connection = connectToDb();
 		if (connection != null) {
 
+			String histograma = parsearHistograma(histogramaArray);
 			Statement statement = connection.createStatement();
-			String sql = "INSERT INTO imagenes_filtradas (Nombre,Imagen) "
-					+ "VALUES ('"+ nombre +"','" + result + "');";
+			String sql = "INSERT INTO imagenes_filtradas (Nombre,Imagen,Histograma) "
+					+ "VALUES ('"+ nombre +"','" + base64 + "',('" + nombre + "_histograma" +"','" + histograma +"', "+ rgb +"));";
 			statement.executeUpdate(sql);
-
+			
+			
 			System.out.println("Se guardo la imagen");
 
 			statement.close();
@@ -144,8 +152,24 @@ public class ProcesamientoImagen {
 
 			System.out.println("Fallo la conexion");
 		}
+		
 	}
 	
+	private static String parsearHistograma(int[][] histogramaArray) {
+		String array = "{";
+		
+		for(int i = 0; i<3; i++){
+			array += Arrays.toString(histogramaArray[i]).replace("[", "{").replace("]", "}");
+			if(i<2){
+				array+=",";
+			}
+		}
+		
+		array += "}";
+		
+		return array;
+	}
+
 	public static Connection connectToDb() {
 
 		Connection c = null;
@@ -164,8 +188,32 @@ public class ProcesamientoImagen {
 		return c;
 	}
 
+	private static Color obtenerColorPromedio(BufferedImage imagen) {
+
+		int rojos = 0;
+		int verdes = 0;
+		int azules = 0;
+		int cantidadPixeles = 0;
+
+		for (int y = 0; y < imagen.getHeight(); y++) {
+			for (int x = 0; x < imagen.getWidth(); x++) {
+				Color RGBEnEsaPosicion = new Color(imagen.getRGB(x, y));
+
+				cantidadPixeles++;
+				rojos += RGBEnEsaPosicion.getRed();
+				verdes += RGBEnEsaPosicion.getGreen();
+				azules += RGBEnEsaPosicion.getBlue();
+			}
+		}
+		Color colorPromedio = new Color(
+				Integer.valueOf(rojos / cantidadPixeles),
+				Integer.valueOf(verdes / cantidadPixeles),
+				Integer.valueOf(azules / cantidadPixeles));
+
+		return colorPromedio;
+	}
 	public void dibujarHistograma() {
 
-		new Formulario(imageActual);
+		new Formulario(imagenActual);
 	}
 }
