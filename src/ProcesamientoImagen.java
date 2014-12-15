@@ -1,14 +1,18 @@
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.media.jai.JAI;
@@ -18,6 +22,13 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.commons.codec.binary.Base64OutputStream;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfFloat;
+import org.opencv.core.MatOfInt;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
 
 /**
  *
@@ -100,6 +111,7 @@ public class ProcesamientoImagen {
     }
 
 	public void guardarEnBase() {
+		
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		OutputStream b64 = new Base64OutputStream(os);
 		
@@ -136,7 +148,7 @@ public class ProcesamientoImagen {
 
 		Connection connection = connectToDb();
 		if (connection != null) {
-
+			
 			String histograma = parsearHistograma(histogramaArray);
 			Statement statement = connection.createStatement();
 			String sql = "INSERT INTO imagenes_filtradas (Nombre,Imagen,Histograma) "
@@ -216,4 +228,45 @@ public class ProcesamientoImagen {
 
 		new Formulario(imagenActual);
 	}
+	
+	private void compararHistogramas(BufferedImage imagen1, BufferedImage imagen2){
+		
+		Mat histograma1 = crearHistogramaOpenCv(imagen1);
+		Mat histograma2 = crearHistogramaOpenCv(imagen2);
+		double comparacion = Imgproc.compareHist(histograma1, histograma2, Imgproc.CV_COMP_CORREL);
+	}
+
+	private Mat crearHistogramaOpenCv(BufferedImage imagenA) {
+		Mat imagen = new Mat();
+		
+		BufferedImage image = imagenA;
+		byte[] data = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
+		imagen = new Mat(image.getHeight(), image.getWidth(), CvType.CV_8UC3);
+		imagen.put(0, 0, data);
+		
+		List<Mat> matList = new LinkedList<Mat>();
+		matList.add(imagen);
+		Mat histogram = new Mat();
+		MatOfFloat ranges=new MatOfFloat(0,256);
+		MatOfInt histSize = new MatOfInt(255);
+		Imgproc.calcHist(matList, new MatOfInt(0), new Mat(), histogram,
+				histSize, ranges);
+
+		// Create space for histogram image
+		Mat histImage = Mat.zeros( 100, (int)histSize.get(0, 0)[0], CvType.CV_8UC1);
+		// Normalize histogram                          
+		Core.normalize(histogram, histogram, 1, histImage.rows() , Core.NORM_MINMAX, -1, new Mat() );   
+		// Draw lines for histogram points
+		for( int i = 0; i < (int)histSize.get(0, 0)[0]; i++ )
+		{                   
+		        Core.line(
+		                histImage,
+		                new org.opencv.core.Point( i, histImage.rows() ),
+		                new org.opencv.core.Point( i, histImage.rows()-Math.round( histogram.get(i,0)[0] )) ,
+		                new Scalar( 255, 255, 255),
+		                1, 8, 0 );
+		}
+		return histogram;
+	}
+	
 }

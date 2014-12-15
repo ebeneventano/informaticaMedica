@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 
 import javax.swing.*;
 
+import org.opencv.core.Core;
+
 @SuppressWarnings("serial")
 public class Principal extends JFrame {
     
@@ -152,6 +154,8 @@ public class Principal extends JFrame {
     public static void main(String args[]) {
 
     	try {
+    		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     UIManager.setLookAndFeel(info.getClassName());
