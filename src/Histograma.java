@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 public class Histograma {
     
@@ -37,5 +38,20 @@ public class Histograma {
         }
         return histogramaReturn;
     }
+    
+    public static String parsearHistograma(int[][] histogramaArray) {
+		String array = "{";
+		
+		for(int i = 0; i<3; i++){
+			array += Arrays.toString(histogramaArray[i]).replace("[", "{").replace("]", "}");
+			if(i<2){
+				array+=",";
+			}
+		}
+		
+		array += "}";
+		
+		return array;
+	}
     
 }

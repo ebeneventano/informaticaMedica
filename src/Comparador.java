@@ -108,7 +108,7 @@ public class Comparador extends JFrame {
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
-		// Generated using JFormDesigner Evaluation license - verdura henrion
+		// Generated using JFormDesigner Evaluation license - 
 		button1 = new JButton();
 		button2 = new JButton();
 		scrollPane1 = new JScrollPane();
@@ -218,7 +218,7 @@ public class Comparador extends JFrame {
 
 	// JFormDesigner - Variables declaration - DO NOT MODIFY
 	// //GEN-BEGIN:variables
-	// Generated using JFormDesigner Evaluation license - verdura henrion
+	// Generated using JFormDesigner Evaluation license - 
 	private JButton button1;
 	private JButton button2;
 	private JScrollPane scrollPane1;

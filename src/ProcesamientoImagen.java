@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -148,7 +147,7 @@ public class ProcesamientoImagen {
 		Connection connection = connectToDb();
 		if (connection != null) {
 			
-			String histograma = parsearHistograma(histogramaArray);
+			String histograma = Histograma.parsearHistograma(histogramaArray);
 			Statement statement = connection.createStatement();
 			String sql = "INSERT INTO imagenes_filtradas (Nombre,Imagen,Histograma) "
 					+ "VALUES ('"+ nombre +"','" + base64 + "',('" + nombre + "_histograma" +"','" + histograma +"', "+ rgb +"));";
@@ -166,21 +165,6 @@ public class ProcesamientoImagen {
 		
 	}
 	
-	private static String parsearHistograma(int[][] histogramaArray) {
-		String array = "{";
-		
-		for(int i = 0; i<3; i++){
-			array += Arrays.toString(histogramaArray[i]).replace("[", "{").replace("]", "}");
-			if(i<2){
-				array+=",";
-			}
-		}
-		
-		array += "}";
-		
-		return array;
-	}
-
 	public static Connection connectToDb() {
 
 		Connection c = null;
@@ -199,7 +183,7 @@ public class ProcesamientoImagen {
 		return c;
 	}
 
-	private static Color obtenerColorPromedio(BufferedImage imagen) {
+	public static Color obtenerColorPromedio(BufferedImage imagen) {
 
 		int rojos = 0;
 		int verdes = 0;
@@ -223,6 +207,7 @@ public class ProcesamientoImagen {
 
 		return colorPromedio;
 	}
+	
 	public void dibujarHistograma() {
 
 		new Formulario(imagenActual);
@@ -269,5 +254,9 @@ public class ProcesamientoImagen {
 		}
 		return histogram;
 	}
-	
+
+	public BufferedImage getImagenActual() {
+		return imagenActual;
+	}
+
 }

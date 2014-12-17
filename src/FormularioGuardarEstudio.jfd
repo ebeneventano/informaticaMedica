@@ -1,0 +1,64 @@
+JFDML JFormDesigner: "5.2.0.3.124" Java: "1.7.0_71" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq {par l {seq {space :::p, par l {comp label4::l:p::p, comp label1:::p:85:p, seq l {comp label3:::p::p, space s:::p, comp nombreEstudio:::p:140:p}, seq l {comp label5:::p::p, par l {seq {space :p:83:p, par l:::p {comp scrollPane1::::256:x, comp notas::::256:x}}, seq l {space :p:48:p, comp mensajeRespuesta:::p:215:p}}}, par t:l::p {comp pacientesCombo::l:::x, comp label2::l:::x}}}, seq l {space :p:142:p, comp button1:::p::p}}, space ::18:x}}"
+			"$verticalGroup": "par l {seq l {space :::p, comp label1:::p:23:p, space :::p, comp pacientesCombo:::p::p, space s:::p, comp label2:::p::p, space s:::p, par b {comp label3::b:p::p, comp nombreEstudio::b:p::p}, space s:::p, par l {comp label4:::p::p, comp scrollPane1:::p:78:p}, space :p:11:p, par l {comp label5:::p::p, comp notas:::p:76:p}, space u:::p, comp mensajeRespuesta::::17:x, space :::p, comp button1:::p::p, space :::p}}"
+		} ) {
+			name: "this"
+			"title": "Guardar Estudio"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "Paciente:"
+				"font": new java.awt.Font( "Calibri", 1, 14 )
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "pacientesCombo"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "Datos del Estudio"
+				"font": new java.awt.Font( "Calibri", 1, 14 )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": "Nombre Del Estudio:"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label4"
+				"text": "Descripción:"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label5"
+				"text": "Notas:"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "nombreEstudio"
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "descripcion"
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JTextArea" ) {
+				name: "notas"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "Guardar Estudio"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "clickGuardarEstudio", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "mensajeRespuesta"
+				"text": "_"
+				"horizontalAlignment": 0
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 415, 420 )
+		} )
+	}
+}

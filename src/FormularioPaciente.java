@@ -19,10 +19,6 @@ import javax.swing.LayoutStyle;
  * Created by JFormDesigner on Wed Dec 17 17:38:24 GFT 2014
  */
 
-/**
- * @author verdura henrion
- */
-
 @SuppressWarnings("serial")
 public class FormularioPaciente extends JFrame {
 	public FormularioPaciente() {
@@ -102,7 +98,7 @@ public class FormularioPaciente extends JFrame {
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
-		// Generated using JFormDesigner Evaluation license - verdura henrion
+		// Generated using JFormDesigner Evaluation license - 
 		nombre = new JTextField();
 		apellido = new JTextField();
 		fechaDeNacimiento = new JTextField();
@@ -204,7 +200,7 @@ public class FormularioPaciente extends JFrame {
 
 	// JFormDesigner - Variables declaration - DO NOT MODIFY
 	// //GEN-BEGIN:variables
-	// Generated using JFormDesigner Evaluation license - verdura henrion
+	// Generated using JFormDesigner Evaluation license - 
 	private JTextField nombre;
 	private JTextField apellido;
 	private JTextField fechaDeNacimiento;

@@ -66,11 +66,14 @@ public class Principal extends JFrame {
         jButton1.setText("Aplicar filtro convolución");
         jButton1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+
+            	if ( jLabel1.getIcon()!=null ){
+            		jButton1ActionPerformed(evt);
+            	}
             }
         });
         
-        jButtonSave.setText("Guardar en Base");
+        jButtonSave.setText("Guardar Estudio");
         jButtonSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
             	jButtonSaveActionPerformed(evt);
@@ -156,7 +159,11 @@ public class Principal extends JFrame {
     }
     
     private void jButtonSaveActionPerformed(ActionEvent evt) {
-       ObjProcesamiento.guardarImagenEnLaBase();
+    	
+    	if ( jLabel1.getIcon()!=null ){
+    		
+    		new FormularioGuardarEstudio(ObjProcesamiento.getImagenActual());
+    	}
     }
     
     private void jButtonDibujarHistograma(ActionEvent evt){
