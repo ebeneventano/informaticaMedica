@@ -20,6 +20,8 @@ public class Principal extends JFrame {
     private JScrollPane jScrollPane1;
     private JButton jButtonSave;
     private JButton jButtonCrearHistograma;
+    private JButton jButtonCompararHistograma;
+    private JButton jButtonCrearPaciente;
     
     ProcesamientoImagen ObjProcesamiento=new ProcesamientoImagen();
 
@@ -34,6 +36,8 @@ public class Principal extends JFrame {
         jButton1 = new JButton();
         jButtonSave = new JButton();
         jButtonCrearHistograma = new JButton();
+        jButtonCompararHistograma = new JButton();
+        jButtonCrearPaciente = new JButton();
         jScrollPane1 = new JScrollPane();
         jLabel1 = new JLabel();
 
@@ -80,6 +84,20 @@ public class Principal extends JFrame {
             }
         });
         
+        jButtonCompararHistograma.setText("Comparar Histogramas");
+        jButtonCompararHistograma.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+            	new Comparador();
+            }
+        });
+        
+        jButtonCrearPaciente.setText("Crear Paciente");
+        jButtonCrearPaciente.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+            	new FormularioPaciente();
+            }
+        });
+        
         jLabel1.setText("Label que contendra la imagen");
         jScrollPane1.setViewportView(jLabel1);
 
@@ -91,6 +109,8 @@ public class Principal extends JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                    	.addComponent(jButtonCrearPaciente)
+                    	.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)
@@ -98,6 +118,8 @@ public class Principal extends JFrame {
                         .addComponent(jButtonSave)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonCrearHistograma)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonCompararHistograma)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3))
                     .addComponent(jScrollPane1))
@@ -111,10 +133,12 @@ public class Principal extends JFrame {
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    	.addComponent(jButtonCrearPaciente)
                         .addComponent(jButton1)
                         .addComponent(jButtonSave)
                         .addComponent(jButton2))
                         .addComponent(jButtonCrearHistograma)
+                        .addComponent(jButtonCompararHistograma)
                     .addComponent(jButton3))
                 .addContainerGap())
         );
@@ -132,7 +156,7 @@ public class Principal extends JFrame {
     }
     
     private void jButtonSaveActionPerformed(ActionEvent evt) {
-       ObjProcesamiento.guardarEnBase();
+       ObjProcesamiento.guardarImagenEnLaBase();
     }
     
     private void jButtonDibujarHistograma(ActionEvent evt){

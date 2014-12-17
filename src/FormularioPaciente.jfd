@@ -1,0 +1,55 @@
+JFDML JFormDesigner: "5.2.0.3.124" Java: "1.7.0_71" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq {space :p:169:p, comp button1:::p::p, space ::205:x}, seq t {space :0:92:x, comp mensajeRespuesta:::p:263:p, space ::134:x}, seq l {space :p:44:p, par l:::p {comp label3:::::x, comp label4:::::x, comp label2:::p:176:p}, space :p:26:p, par l:::p {comp fechaDeNacimiento:::::x, comp apellido::l:::x, comp nombre::l:p:172:p}, space ::71:x}, seq l {space :p:157:p, comp label1:::p:169:p, space ::163:x}}"
+			"$verticalGroup": "par l {seq l {space :::p, comp label1:::p:21:p, space :p:26:p, par b {comp nombre::b:::x, comp label2::b:p:20:p}, space s:::p, par b {comp label3::b:p:20:p, comp apellido::b:p::p}, space u:::p, par b {comp fechaDeNacimiento::b:p::p, comp label4::b:p:20:p}, space :p:37:p, comp mensajeRespuesta:::p::p, space :::p, comp button1:::p::p, space :p:64:p}}"
+		} ) {
+			name: "this"
+			"background": new java.awt.Color( 255, 255, 255, 255 )
+			"title": "Nuevo Paciente"
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "nombre"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "apellido"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "fechaDeNacimiento"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "Guardar Paciente"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "clickGuardarPaciente", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "CARGAR NUEVO PACIENTE"
+				"font": new java.awt.Font( "Calibri", 1, 14 )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "Nombre Completo:"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": "Apellido:"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label4"
+				"text": "Fecha de Nacimiento (DD/MM/YYYY):"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "mensajeRespuesta"
+				"font": new java.awt.Font( "Calibri", 1, 14 )
+				"text": "_"
+				"horizontalAlignment": 0
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 505, 330 )
+		} )
+	}
+}

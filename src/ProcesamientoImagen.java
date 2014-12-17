@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -110,7 +109,7 @@ public class ProcesamientoImagen {
     	return imagenActual;
     }
 
-	public void guardarEnBase() {
+	public void guardarImagenEnLaBase() {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		OutputStream b64 = new Base64OutputStream(os);
@@ -229,14 +228,16 @@ public class ProcesamientoImagen {
 		new Formulario(imagenActual);
 	}
 	
-	private void compararHistogramas(BufferedImage imagen1, BufferedImage imagen2){
+	public static double compararHistogramas(BufferedImage imagen1, BufferedImage imagen2){
 		
 		Mat histograma1 = crearHistogramaOpenCv(imagen1);
 		Mat histograma2 = crearHistogramaOpenCv(imagen2);
 		double comparacion = Imgproc.compareHist(histograma1, histograma2, Imgproc.CV_COMP_CORREL);
+		
+		return comparacion;
 	}
 
-	private Mat crearHistogramaOpenCv(BufferedImage imagenA) {
+	private static Mat crearHistogramaOpenCv(BufferedImage imagenA) {
 		Mat imagen = new Mat();
 		
 		BufferedImage image = imagenA;

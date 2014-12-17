@@ -1,0 +1,53 @@
+JFDML JFormDesigner: "5.2.0.3.124" Java: "1.7.0_71" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq t {space ::92:x, comp button1:::p::p, space :p:53:p, comp button3:::p::p, space :p:55:p, comp button2:::p::p, space :p:79:p}, seq l {space :::p, par t {comp scrollPane1:::p:273:p, comp porcentajeLabel:::p:157:p}, space s:::p, par l {seq {comp porcentaje::::78:x, space :p:205:p}, seq {comp scrollPane2::::273:x, space :::p}}}}"
+			"$verticalGroup": "par l {seq t {space :::p, par l:::p {comp scrollPane1::::269:x, comp scrollPane2::::269:x}, space s:::p, par b {comp porcentaje::b:p::p, comp porcentajeLabel::b::21:x}, space u:::p, par b {comp button1::b:p::p, comp button2::b:p::p, comp button3::b:p::p}, space :::p}}"
+		} ) {
+			name: "this"
+			"title": "Comparador de Imágenes"
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "Cargar Imagen 1"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "clickCargarImagen1", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button2"
+				"text": "Cargar Imagen 2"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "clickCargarImagen2", true ) )
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label2"
+				} )
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane2"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label3"
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button3"
+				"text": "Comparar"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "clickBotonComparar", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "porcentajeLabel"
+				"text": "Porcentaje de similitud: "
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "porcentaje"
+				"text": "0%"
+				"font": new java.awt.Font( "Tahoma", 1, 11 )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 600, 400 )
+		} )
+	}
+}
